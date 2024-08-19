@@ -6,7 +6,11 @@ from sqlalchemy.orm import Session
 
 @pytest.fixture()
 def connection():
-    file_path = os.path.join(os.path.abspath(os.getcwd()),"src\\db\\storedb.db")
+    file_path = ''
+    if os.name == 'nt':
+        file_path = os.path.join(os.path.abspath(os.getcwd()),"src\\db\\storedb.db")
+    else:
+        file_path = os.path.join(os.path.abspath(os.getcwd()),"src/db/storedb.db")
 
     DATABASE_URL = "sqlite:///" + file_path
     print(f"Using database: {DATABASE_URL}")
