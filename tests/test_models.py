@@ -40,4 +40,17 @@ def test_add_category(connection):
             assert session.query(Category).count() == 1
             
         assert session.query(Category).filter(Category.description == "Test Category").first().description == "Test Category"
+           
+           
+def test_add_product(connection):
+    product = Product(name="Test Product", description="Test Description", priceperunit=10.0,
+                      quantityonhand=10, category_id=1, user_id=1)
+    
+    with Session(connection) as session:
+        product_count = session.query(Product).count()
+        if product_count == 0:        
+            session.add(product)
+            session.commit()
+            assert session.query(Product).count() == 1
             
+        assert session.query(Product).filter(Product.name == "Test Product").first().name == "Test Product"
